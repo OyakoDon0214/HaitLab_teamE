@@ -16,17 +16,17 @@ contours = cv2.findContours(
     thresh,      
     cv2.RETR_EXTERNAL, 
     cv2.CHAIN_APPROX_SIMPLE)[0]
-# 抽出した領域を繰り返し処理する 
 x=[cv2.boundingRect(c)[0] for c in contours]
 y=[cv2.boundingRect(c)[1] for c in contours]
 w=[cv2.boundingRect(c)[2] for c in contours]
 h=[cv2.boundingRect(c)[3] for c in contours]
-"""for cnt in contours:
+"""for cnt in contours:# 抽出した領域を繰り返し処理する 
     x, y, w, h = cv2.boundingRect(cnt) # --- (※5)
     if h < 10: continue # 小さすぎるのは飛ばす
     cv2.rectangle(im, (x, y), (x+w, y+h), (0,0,255), 2)
 #plt.plot(y)"""
 plt.scatter(x,y)
+
 plt.show()
 cv2.imwrite('numbers100-cnt2.png',im)
 

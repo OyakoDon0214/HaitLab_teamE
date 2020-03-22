@@ -35,7 +35,7 @@ class CutReceipt:
             if abs(cutting_line_candidates[-1]-y)<self.half_letter_size:#同じ行だったら
                 cutting_line_candidates.append(y)
             else:#同じ行じゃなかったら
-                if len(cutting_line_candidates)>5:#列に5文字以上あるなら
+                if len(cutting_line_candidates)>4:#列に4文字以上あるなら
                     cutting_lines.append(int(sum(cutting_line_candidates)/len(cutting_line_candidates)))#平均値を追加
                 cutting_line_candidates.clear()
                 cutting_line_candidates.append(y)
@@ -56,6 +56,8 @@ class CutReceipt:
         image=copy.copy(self.receipt_image)
         for line in self.cutting_lines:
             cv2.line(image,(0,line),(self.width,line),(255,0,0),2)
+        plt.imshow(image)
+        plt.show()
         return image
 
     def cut_image(self):
@@ -66,8 +68,7 @@ class CutReceipt:
         while len(line_queue)>2:
             upper=line_queue.pop()
             lower=line_queue.pop()
-            if (lower-upper)>self.half_letter_size:
-                cut_images.append(image[upper:lower])
+            cut_images.append(image[upper:lower])
         if len(line_queue)==1:
             cut_images.append(image[line_queue.pop():self.height])
         return cut_images
@@ -77,11 +78,19 @@ class CutReceipt:
             file_pass='./'+folder_pass+'/cutimage'+str(i)+'.png'
             cv2.imwrite(file_pass,image)
 
-    def get_margin(self):
-
-        return  
-
+    def draw_rect(self):
+        image=copy.copy(self.receipt_image)
+        for cnt in self.contours:# 抽出した領域を繰り返し処理する 
+            x, y, w, h = cv2.boundingRect(cnt) # --- (※5)
+            if h < 1: continue # 小さすぎるのは飛ばす
+            cv2.rectangle(image, (x, y), (x+w, y+h), (0,0,255), 2)
+        plt.imshow(image)
+        plt.show()
+        return image
+  
 
 if __name__ == "__main__":
-    cr=CutReceipt('receipt-img.jpg')
+    cr=CutReceipt('receipt_image.jpg')
     cr.save_cut_image('TestCutImageFolder')
+    cr.draw_cutting_lines()
+   

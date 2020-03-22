@@ -3,42 +3,85 @@ import sys
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-# 画像の読み込み
-im = cv2.imread('IMG_2BCE1EB797B2-1.JPG')
-image=cv2.imread('IMG_2BCE1EB797B2-1.JPG')
-# グレイスケールに変換しぼかした上で二値化する 
-gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-blur = cv2.GaussianBlur(gray, (5, 5), 0)
-thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
+import pandas as pd
+import copy
 
-# 輪郭を抽出 --- (※1)
-contours = cv2.findContours(
-    thresh,      
-    cv2.RETR_EXTERNAL, 
-    cv2.CHAIN_APPROX_SIMPLE)[0]
-x=[cv2.boundingRect(c)[0] for c in contours]
-y=[cv2.boundingRect(c)[1] for c in contours]
-w=[cv2.boundingRect(c)[2] for c in contours]
-h=[cv2.boundingRect(c)[3] for c in contours]
-"""for cnt in contours:# 抽出した領域を繰り返し処理する 
-    x, y, w, h = cv2.boundingRect(cnt) # --- (※5)
-    if h < 10: continue # 小さすぎるのは飛ばす
-    cv2.rectangle(im, (x, y), (x+w, y+h), (0,0,255), 2)
-#plt.plot(y)"""
-plt.scatter(x,y)
+class CutReceipt:
+    
+    def __init__(self,receipt_image_pass):
+        self.receipt_image_pass=receipt_image_pass
+        self.receipt_image=cv2.imread(self.receipt_image_pass)
+        self.contours=self.find_contours()
+        self.cutting_lines=self.find_cutting_lines()
+        self.height, self.width, self.channels=self.receipt_image.shape[:3]
+        return
 
-plt.show()
-cv2.imwrite('numbers100-cnt2.png',im)
+    def find_cutting_lines(self):
+        cutting_lines=[]
+        image=self.receipt_image
+        # 抽出した領域を繰り返し処理する 
+        contours=self.contours
+        bound_rects=[cv2.boundingRect(c) for c in contours]
+        #bound_rectsは(x,y,w,h)のリスト
+        df_bound_rects=pd.DataFrame(bound_rects)
+        df_bound_rects.columns = ['x','y','w','h']
+        margin=int(df_bound_rects["h"].quantile()/4)
+        self.half_letter_size=int(df_bound_rects["h"].quantile()/2)
 
-#%%
-trimmed_image=image[765:810,]
-cv2.imwrite("trimmed_image.png", trimmed_image)
+        cutting_line_candidates=[df_bound_rects["y"][0]]#同じ行中の文字のy座標を入れておくリスト
+        for cnt in contours:# 抽出した領域を繰り返し処理する 
+            x, y, w, h = cv2.boundingRect(cnt)
+            if (h<self.half_letter_size): continue # 小さすぎるの大きすぎるのは飛ばす
+            if abs(cutting_line_candidates[-1]-y)<self.half_letter_size:#同じ行だったら
+                cutting_line_candidates.append(y)
+            else:#同じ行じゃなかったら
+                if len(cutting_line_candidates)>5:#列に5文字以上あるなら
+                    cutting_lines.append(int(sum(cutting_line_candidates)/len(cutting_line_candidates)))#平均値を追加
+                cutting_line_candidates.clear()
+                cutting_line_candidates.append(y)
+        return cutting_lines
+    
+    def find_contours(self):
+         # 画像の読み込み
+        image=self.receipt_image
+        # グレイスケールに変換しぼかした上で二値化する 
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        blur = cv2.GaussianBlur(gray, (5, 5), 0)
+        thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
+        # 輪郭を抽出 --- (※1)
+        contours = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[0]
+        return contours
 
-# %%
-print(trimmed_image.shape)
+    def draw_cutting_lines(self):   
+        image=copy.copy(self.receipt_image)
+        for line in self.cutting_lines:
+            cv2.line(image,(0,line),(self.width,line),(255,0,0),2)
+        return image
 
-# %%
-im.shape
+    def cut_image(self):
+        cut_images=[]
+        image=copy.copy(self.receipt_image)
+        line_queue=copy.copy(self.cutting_lines)
+        line_queue.append(0)
+        while len(line_queue)>2:
+            upper=line_queue.pop()
+            lower=line_queue.pop()
+            if (lower-upper)>self.half_letter_size:
+                cut_images.append(image[upper:lower])
+        if len(line_queue)==1:
+            cut_images.append(image[line_queue.pop():self.height])
+        return cut_images
+
+    def save_cut_image(self,folder_pass):
+        for i,image in enumerate(self.cut_image()):
+            file_pass='./'+folder_pass+'/cutimage'+str(i)+'.png'
+            cv2.imwrite(file_pass,image)
+
+    def get_margin(self):
+
+        return  
 
 
-# %%
+if __name__ == "__main__":
+    cr=CutReceipt('receipt-img.jpg')
+    cr.save_cut_image('TestCutImageFolder')

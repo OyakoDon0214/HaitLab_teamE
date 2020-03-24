@@ -28,7 +28,7 @@ def uploads_file():
             filename = secure_filename(file.filename)
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            image=Image.open(os.path.join(UPLOAD_FOLDER, filename))
+            image=Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             r=ConvertReceipt.ConvertReceipt(image)
             dict=r.convert()
             shop=dict["shop"]

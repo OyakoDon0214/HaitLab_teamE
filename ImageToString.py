@@ -13,7 +13,7 @@ import pyocr.builders
 
 import argparse
 import cv2
-class Image_to_string:
+class ImageToString:
     def image_to_string(self,image):
         tools = pyocr.get_available_tools()
         if len(tools) == 0:
@@ -22,7 +22,7 @@ class Image_to_string:
     # The tools are returned in the recommended order of usage
         tool = tools[0]
         txt = tool.image_to_string(
-            self.cv2pil(image),#opencv型のimageからpil型に変換
+            self.cv2pil(image),#opencv型のimageからpilのimage型に変換
             lang="jpn",
             builder=pyocr.builders.TextBuilder(tesseract_layout=6)
         )
@@ -42,7 +42,7 @@ class Image_to_string:
 
 
 image=cv2.imread("trimmed_image.png")
-txt = Image_to_string().image_to_string(image)
+txt = ImageToString().image_to_string(image)
 print(txt)
 '''
 # txt is a Python string

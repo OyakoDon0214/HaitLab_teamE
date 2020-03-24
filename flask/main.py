@@ -1,14 +1,15 @@
 import os
+from os.path import join,dirname,realpath
 # request フォームから送信した情報を扱うためのモジュール
 # redirect  ページの移動
 # url_for アドレス遷移
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 # ファイル名をチェックする関数
 from werkzeug.utils import secure_filename
 # 画像のダウンロード
 from flask import send_from_directory
 # 画像のアップロード先のディレクトリ
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads/..')
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 

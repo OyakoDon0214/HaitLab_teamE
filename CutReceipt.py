@@ -5,7 +5,7 @@ import cv2
 import matplotlib.pyplot as plt
 import pandas as pd
 import copy
-
+#かわもとくんのgit練習ようコメント
 class CutReceipt:
     
     def __init__(self,receipt_image_pass):

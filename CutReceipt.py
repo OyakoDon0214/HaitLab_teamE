@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import copy
 
+
 class CutReceipt:
     
     def __init__(self,receipt_image_pass):

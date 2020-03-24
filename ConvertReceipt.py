@@ -1,6 +1,7 @@
 from datetime import datetime
 import cv2
 from CutReceipt import CutReceipt
+from ImageToString import ImageToString
 
 class ConvertReceipt:
     def __init__(self,image_pass):

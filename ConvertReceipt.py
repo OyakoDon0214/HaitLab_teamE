@@ -1,6 +1,7 @@
 from datetime import datetime
 import cv2
-from CutReceipt import CutReceipt
+import CutReceipt
+
 class ConvertReceipt:
     def __init__(self,image):
         self.image=image
@@ -24,6 +25,7 @@ class ConvertReceipt:
 if __name__=="__main__":
     image=cv2.imread("receipt_image.jpg")
     cr=CutReceipt(image)
+    cr.save_cut_image('TestCutImageFolder')
 
     r=ConvertReceipt("receipt_image.jpg")
     dict=r.convert()

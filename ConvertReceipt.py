@@ -3,8 +3,8 @@ import cv2
 from CutReceipt import CutReceipt
 
 class ConvertReceipt:
-    def __init__(self,image):
-        self.image=image
+    def __init__(self,image_pass):
+        self.image=cv2.imread(image_pass)
 
 
     def convert(self):

@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, url_for,render_template,flash
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from PIL import Image
-import ConvertReceipt
+from ConvertReceipt import ConvertReceipt
 
 UPLOAD_FOLDER = './uploads'
 # アップロードされる拡張子の制限
@@ -32,8 +32,9 @@ def uploads_file():
             r=ConvertReceipt.ConvertReceipt(image)
             dict=r.convert()
             shop=dict["shop"]
+
             # アップロード後のページに転送
-            return render_template('result.html',result=shop)
+            return render_template('result.html')
     elif request.method == 'GET':        
         return '''
         <!doctype html>
@@ -60,4 +61,4 @@ def uploads_file():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-app.run(port=8000, debug=True)
+app.run()

@@ -1,3 +1,4 @@
+from ConvertReceipt import ConvertReceipt
 import os
 from os.path import join,dirname,realpath
 # request フォームから送信した情報を扱うためのモジュール
@@ -8,6 +9,10 @@ from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 # 画像のダウンロード
 from flask import send_from_directory
+import sys
+sys.path.append(join(dirname(realpath(__file__)), '..'))
+
+
 # 画像のアップロード先のディレクトリ
 UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads')
 # アップロードされる拡張子の制限
@@ -43,7 +48,9 @@ def uploads_file():
             filename = secure_filename(file.filename)
             # ファイルの保存
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # アップロード後のページに転送
+            # アップロード後の処理
+            cr=ConvertReceipt(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            dict=cr.convert()
             return redirect(url_for('uploaded_file', filename=filename))
 
     elif request.method == 'GET':        

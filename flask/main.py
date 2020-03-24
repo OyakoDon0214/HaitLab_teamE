@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 # 画像のダウンロード
 from flask import send_from_directory
 # 画像のアップロード先のディレクトリ
-UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads/..')
+UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads')
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
@@ -45,6 +45,7 @@ def uploads_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # アップロード後のページに転送
             return redirect(url_for('uploaded_file', filename=filename))
+
     elif request.method == 'GET':        
         return '''
         <!doctype html>

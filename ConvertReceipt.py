@@ -1,6 +1,6 @@
 from datetime import datetime
 import cv2
-import CutReceipt
+from CutReceipt import CutReceipt
 
 class ConvertReceipt:
     def __init__(self,image):

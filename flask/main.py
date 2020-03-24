@@ -1,4 +1,3 @@
-from ConvertReceipt import ConvertReceipt
 import os
 from os.path import join,dirname,realpath
 # request フォームから送信した情報を扱うためのモジュール
@@ -12,7 +11,7 @@ from flask import send_from_directory
 import sys
 sys.path.append(join(dirname(realpath(__file__)), '..'))
 
-
+from ConvertReceipt import ConvertReceipt
 # 画像のアップロード先のディレクトリ
 UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads')
 # アップロードされる拡張子の制限

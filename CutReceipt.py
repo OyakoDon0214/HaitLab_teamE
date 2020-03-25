@@ -67,7 +67,7 @@ class CutReceipt:
         line_queue.append(0)
         while len(line_queue)>2:
             upper=line_queue.pop()
-            lower=line_queue.pop()
+            lower=line_queue[-1]
             cut_images.append(image[upper:lower])
         if len(line_queue)==1:
             cut_images.append(image[line_queue.pop():self.height])
@@ -91,6 +91,7 @@ class CutReceipt:
 
 if __name__ == "__main__":
     cr=CutReceipt('receipt_image.jpg')
-    cr.save_cut_image('TestCutImageFolder')
     cr.draw_cutting_lines()
+    cr.save_cut_image('TestCutImageFolder')
+    print(len(cr.cut_image()))
    

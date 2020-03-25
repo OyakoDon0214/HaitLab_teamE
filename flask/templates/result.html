@@ -12,15 +12,17 @@
     </h1>
     <table border="1">
         {% for key in dict %}
-            {%if%}
             <tr>
                 <th>{{key}}</th>
                 {% if key=="item"%}
-                    <table>
+                    <table　border="0" cellpadding="0" cellspacing="0">
                         {% for k in dict['item'] %}
+                        <tr>
                             <th>{{k}}</th>
                             <th>{{dict['item'][k]}}</th>
+                        </tr>
                         {% endfor %}
+                        
                     </table>
                 {% else %}
                     <th>{{dict[key]}}</th>

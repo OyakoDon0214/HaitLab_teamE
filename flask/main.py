@@ -10,7 +10,6 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 import sys
 sys.path.append(join(dirname(realpath(__file__)), '..'))
-
 from ConvertReceipt import ConvertReceipt
 # 画像のアップロード先のディレクトリ
 UPLOAD_FOLDER =join(dirname(realpath(__file__)), './uploads')
@@ -50,7 +49,7 @@ def uploads_file():
             # アップロード後の処理
             cr=ConvertReceipt(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             dict=cr.convert()
-            return redirect(url_for('uploaded_file', filename=filename))
+            return render_template('result.html',dict=dict)
 
     elif request.method == 'GET':        
         return '''

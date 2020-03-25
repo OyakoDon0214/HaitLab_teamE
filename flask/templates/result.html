@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>
+        読み取り結果
+    </title>
+</head>
+<body>
+    <h1>
+        読み取り結果
+    </h1>
+    <table border="1">
+        {% for key in dict %}
+            {%if%}
+            <tr>
+                <th>{{key}}</th>
+                {% if key=="item"%}
+                    <table>
+                        {% for k in dict['item'] %}
+                            <th>{{k}}</th>
+                            <th>{{dict['item'][k]}}</th>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <th>{{dict[key]}}</th>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+    </table>
+        
+    
+</body>
+</html>

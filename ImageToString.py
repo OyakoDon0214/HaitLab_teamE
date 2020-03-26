@@ -39,30 +39,23 @@ class Image_to_string:
         new_image = Image.fromarray(new_image)
         return new_image
 
+from CutReceipt import CutReceipt
+import matplotlib.pyplot as plt
+cr=CutReceipt('receipt_image.jpg')
+images=cr.cut_image()
 
+import os
 
-image=cv2.imread("trimmed_image.png")
-txt = Image_to_string().image_to_string(image)
-print(txt)
-'''
-# txt is a Python string
-parser = argparse.ArgumentParser(description='tesseract ocr test')
-parser.add_argument('image', help='./image/img.jpg')
+# ファイル数を調べたいフォルダのパス
+path = "./TestCutImageFolder" 
 
-args = parser.parse_args()
+# フォルダ内の全ファイル名をリスト化
+files = os.listdir(path)
 
-res = tool.image_to_string(Image.open('./image/img.jpg'),
-                           lang="jpn",
-                           builder=pyocr.builders.WordBoxBuilder(tesseract_layout=6))
-
-# draw result 
-out = cv2.imread('./image/img.jpg')
-for d in res:
-    print( d.content)
-    print( d.position)
-    cv2.rectangle(out, d.position[0], d.position[1], (0, 0, 255), 2)
-
-cv2.imshow('image',out)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-'''
+lst =[]
+for i in range(0,len(images)):
+    path = "./TestCutImageFolder/" + files[i]
+    image=cv2.imread(path)
+    txt = Image_to_string().image_to_string(image)
+    lst.append(txt)
+print(lst)

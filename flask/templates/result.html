@@ -13,21 +13,19 @@
     <table border="1">
         {% for key in dict %}
             <tr>
+                {% if key!="item"%}
                 <th>{{key}}</th>
-                {% if key=="item"%}
-                    <table　border="0" cellpadding="0" cellspacing="0">
-                        {% for k in dict['item'] %}
-                        <tr>
-                            <th>{{k}}</th>
-                            <th>{{dict['item'][k]}}</th>
-                        </tr>
-                        {% endfor %}
-                        
-                    </table>
-                {% else %}
-                    <th>{{dict[key]}}</th>
+                <th>{{dict[key]}}</th>
                 {% endif %}
-
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>品目</h3>
+    <table border="1">
+        {% for key in dict['item'] %}
+            <tr>
+                <th>{{key}}</th>
+                <th>{{dict['item'][key]}}</th>
             </tr>
         {% endfor %}
     </table>

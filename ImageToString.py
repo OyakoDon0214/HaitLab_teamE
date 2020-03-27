@@ -44,7 +44,8 @@ class Image_to_string:
         lst =[]
         for image in images:
             txt = self.image_to_string(image)
-            lst.append(txt)
+            if txt:
+                lst.append(txt)
         return lst
 
 
@@ -53,7 +54,6 @@ if __name__ == "__main__":
     from CutReceipt import CutReceipt
     import matplotlib.pyplot as plt
     cr=CutReceipt('receipt_image.jpg')
-    cr.draw_cutting_lines()
     images=cr.cut_image()
     i2s=Image_to_string()
     lst=i2s.images2strings(images)

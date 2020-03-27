@@ -68,7 +68,7 @@ class CutReceipt:
         while len(line_queue)>2:
             upper=line_queue.pop()
             lower=line_queue[-1]
-            cut_images.append(image[upper:lower])
+            cut_images.append(image[upper+1:lower-1])
         if len(line_queue)==1:
             cut_images.append(image[line_queue.pop():self.height])
         return cut_images

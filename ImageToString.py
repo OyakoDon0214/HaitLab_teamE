@@ -39,23 +39,23 @@ class Image_to_string:
         new_image = Image.fromarray(new_image)
         return new_image
 
-from CutReceipt import CutReceipt
-import matplotlib.pyplot as plt
-cr=CutReceipt('receipt_image.jpg')
-images=cr.cut_image()
+    
+    def images2strings(self,images):
+        lst =[]
+        for image in images:
+            txt = self.image_to_string(image)
+            lst.append(txt)
+        return lst
 
-import os
 
-# ファイル数を調べたいフォルダのパス
-path = "./TestCutImageFolder" 
-
-# フォルダ内の全ファイル名をリスト化
-files = os.listdir(path)
-
-lst =[]
-for i in range(0,len(images)):
-    path = "./TestCutImageFolder/" + files[i]
-    image=cv2.imread(path)
-    txt = Image_to_string().image_to_string(image)
-    lst.append(txt)
-print(lst)
+if __name__ == "__main__":
+    pass
+    from CutReceipt import CutReceipt
+    import matplotlib.pyplot as plt
+    cr=CutReceipt('receipt_image.jpg')
+    cr.draw_cutting_lines()
+    images=cr.cut_image()
+    i2s=Image_to_string()
+    lst=i2s.images2strings(images)
+    for string in lst:
+        print(string)

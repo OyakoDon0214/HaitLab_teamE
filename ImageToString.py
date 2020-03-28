@@ -63,10 +63,10 @@ class Image_to_string:
         for string in string_list:
             if  "\\" in string:
                 if '計' in string: 
-                    dict["total_price"]=string.split('\\')[1]
-                    continue
-                name=string.split('\\')[0]
-                dict['item'][name]=string.split('\\')[1]
+                    dict["total_price"]=string.split('\\')[-1]
+                    break
+                name=string.split('\\')[-2]
+                dict['item'][name]=string.split('\\')[-1]
         return dict
 
 if __name__ == "__main__":
@@ -75,8 +75,8 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     cr=CutReceipt('IMG_2BCE1EB797B2-1.JPG')
     images=cr.cut_image()
-    cr.draw_cutting_lines()
     i2s=Image_to_string()
     lst=i2s.images2strings(images)
     for string in lst:
         print(string)
+    print(i2s.strigs2dict(lst))

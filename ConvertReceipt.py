@@ -11,6 +11,7 @@ class ConvertReceipt:
         cut_images=cr.cut_image()
         i2s=Image_to_string()
         strings=i2s.images2strings(cut_images)
+        self.dict=i2s.strigs2dict(strings)
         
 
 
@@ -27,7 +28,7 @@ class ConvertReceipt:
             },
             "total_price":460,
         }
-        return testdict
+        return self.dict
 
 
 if __name__=="__main__":

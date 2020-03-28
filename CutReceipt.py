@@ -11,6 +11,7 @@ class CutReceipt:
     def __init__(self,receipt_image_pass):
         self.receipt_image_pass=receipt_image_pass
         self.receipt_image=cv2.imread(self.receipt_image_pass)
+        self.receipt_image=cv2.resize(self.receipt_image,(300,600) )
         self.contours=self.find_contours()
         self.cutting_lines=self.find_cutting_lines()
         self.height, self.width, self.channels=self.receipt_image.shape[:3]

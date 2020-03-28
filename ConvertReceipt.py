@@ -1,13 +1,21 @@
 from datetime import datetime
 import cv2
 from CutReceipt import CutReceipt
+from ImageToString import Image_to_string
 
 class ConvertReceipt:
     def __init__(self,image_pass):
         self.image=cv2.imread(image_pass)
+        
+        cr=CutReceipt(image_pass)
+        cut_images=cr.cut_image()
+        i2s=Image_to_string()
+        strings=i2s.images2strings(cut_images)
+        
 
 
     def convert(self):
+
         testdict={
             "shop":"FamilyMart一の橋店",
             "adress":"東京都港区麻布十番1-2-10",

@@ -4,7 +4,7 @@ Created on Sun Mar 22 17:09:23 2020
 
 @author: gmot8
 """
-
+from datetime import datetime
 from PIL import Image
 import sys
 
@@ -19,7 +19,7 @@ class Image_to_string:
         if len(tools) == 0:
             print("No OCR tool found")
             sys.exit(1)
-    # The tools are returned in the recommended order of usage
+        # The tools are returned in the recommended order of usage
         tool = tools[0]
         txt = tool.image_to_string(
             self.cv2pil(image),#opencv型のimageからpil型に変換
@@ -48,13 +48,27 @@ class Image_to_string:
                 lst.append(txt)
         return lst
 
+    def strigs2dict(self,string_list):
+        dict={
+            "shop":"FamilyMart",
+            "adress":"",
+            "date":datetime.now(),
+            "item":{
+                "":0,
+            },
+            "total_price":0,
+        }
+        for string in string_list:
+            pass
+        return dict
 
 if __name__ == "__main__":
     pass
     from CutReceipt import CutReceipt
     import matplotlib.pyplot as plt
-    cr=CutReceipt('receipt_image.jpg')
+    cr=CutReceipt('IMG_5772.jpg')
     images=cr.cut_image()
+    cr.draw_cutting_lines()
     i2s=Image_to_string()
     lst=i2s.images2strings(images)
     for string in lst:

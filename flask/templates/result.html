@@ -2,35 +2,45 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="../static/stylesheet.css">
     <title>
-        読み取り結果
+        Receipt Reader
     </title>
 </head>
 <body>
-    <h1>
-        読み取り結果
-    </h1>
-    <table border="1">
-        {% for key in dict %}
-            <tr>
-                {% if key!="item"%}
-                <th>{{key}}</th>
-                <th>{{dict[key]}}</th>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
-    <h3>品目</h3>
-    <table border="1">
-        {% for key in dict['item'] %}
-            <tr>
-                <th>{{key}}</th>
-                <th>{{dict['item'][key]}}</th>
-            </tr>
-        {% endfor %}
-    </table>
-        
-    
+    <div class="header">
+        <h1>
+            Receipt Reader
+        </h1>
+    </div>
+    <div class="main">
+        <h3>
+            読み取り結果
+        </h3>
+        <table border="1">
+            {% for key in dict %}
+                <tr>
+                    {% if key!="item"%}
+                    <th>{{key}}</th>
+                    <th>{{dict[key]}}</th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <h3>品目</h3>
+        <table border="1">
+            {% for key in dict['item'] %}
+                <tr>
+                    <th>{{key}}</th>
+                    <th>{{dict['item'][key]}}</th>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="footer">   
+        <h3>HaitLab-teamE</h3>
+    </div>
+  
 </body>
 </html>

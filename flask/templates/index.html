@@ -2,17 +2,25 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/stylesheet.css">
     <title>
-        ファイルをアップロード
+        Receipt Reader
     </title>
 </head>
 <body>
-    <h1>
-        ファイルをアップロード
-    </h1>
-    <form method = post enctype = multipart/form-data>
-    <p><input type=file name = file>
-    <input type = submit value = Upload>
-    </form>
+    <div class="header">
+        <h1>
+            Receipt Reader
+        </h1>
+    </div>
+    <div class="main">
+        <form method = post enctype = multipart/form-data>
+            <p><input type=file name = file>
+            <input type = submit value = Upload>
+        </form>
+    </div>
+    <div class="footer">  
+        <h3>HaitLab-teamE</h3>
+    </div>
 </body>
 </html>

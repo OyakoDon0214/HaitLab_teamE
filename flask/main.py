@@ -52,25 +52,7 @@ def uploads_file():
             return render_template('result.html',dict=dict)
 
     elif request.method == 'GET':        
-        return '''
-        <!doctype html>
-        <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>
-                    ファイルをアップロード
-                </title>
-            </head>
-            <body>
-                <h1>
-                    ファイルをアップロード
-                </h1>
-                <form method = post enctype = multipart/form-data>
-                <p><input type=file name = file>
-                <input type = submit value = Upload>
-                </form>
-            </body>
-    '''
+        return render_template('index.html')
 
 @app.route('/uploads/<filename>')
 # ファイルを表示する

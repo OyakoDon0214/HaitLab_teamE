@@ -7,7 +7,7 @@ Created on Sun Mar 22 17:09:23 2020
 from datetime import datetime
 from PIL import Image
 import sys
-
+import re
 import pyocr
 import pyocr.builders
 
@@ -54,19 +54,26 @@ class Image_to_string:
             "adress":"",
             "date":datetime.now(),
             "item":{
-                "":0,
             },
             "total_price":0,
         }
+        dict["shop"]=string_list[0]
+        dict["adress"]=string_list[1]
+
         for string in string_list:
-            pass
+            if  "\\" in string:
+                if '計' in string: 
+                    dict["total_price"]=string.split('\\')[1]
+                    continue
+                name=string.split('\\')[0]
+                dict['item'][name]=string.split('\\')[1]
         return dict
 
 if __name__ == "__main__":
     pass
     from CutReceipt import CutReceipt
     import matplotlib.pyplot as plt
-    cr=CutReceipt('IMG_5772.jpg')
+    cr=CutReceipt('IMG_2BCE1EB797B2-1.JPG')
     images=cr.cut_image()
     cr.draw_cutting_lines()
     i2s=Image_to_string()

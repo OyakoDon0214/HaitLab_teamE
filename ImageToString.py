@@ -59,7 +59,7 @@ class Image_to_string:
         }
         dict["shop"]=string_list[0]
         dict["adress"]=string_list[1]
-
+        
         for string in string_list:
             if  "\\" in string:
                 if '計' in string: 
@@ -67,6 +67,8 @@ class Image_to_string:
                     break
                 name=string.split('\\')[-2]
                 dict['item'][name]=string.split('\\')[-1]
+            if '月' in string:
+                dict["date"]=string
         return dict
 
 if __name__ == "__main__":

@@ -10,14 +10,14 @@
   background-color:#dee7ec;
   float: initial;
 }
-table {
-  margin:0 auto;
-}
-form {
-  margin: 0 auto;
-}
 .footer {
   background-color:#2f5167;
   color: #fff;
   height: 100px;
+}
+table {
+margin:0 auto;
+}
+form {
+margin: 0 auto;
 }
